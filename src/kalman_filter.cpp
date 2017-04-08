@@ -23,12 +23,12 @@ void KalmanFilter::Predict() {
 }
 
 void KalmanFilter::Update(const VectorXd &z) {
-  VectorXd y_ = z - H_ * x_;
-  MatrixXd S_ = H_ * P_ * H_.transpose() + R_;
-  MatrixXd K_ = P_ * H_.transpose() * S_.inverse();
+  VectorXd y = z - H_ * x_;
+  MatrixXd S = H_ * P_ * H_.transpose() + R_;
+  MatrixXd K = P_ * H_.transpose() * S.inverse();
 
-  x_ = x_ + K_ * y_;
-  P_ = ( MatrixXd::Identity(P_.size(), P_.size()) - K_ * H_ ) * P_;
+  x_ = x_ + K * y;
+  P_ = ( MatrixXd::Identity(P_.size(), P_.size()) - K * H_ ) * P_;
 
 }
 
@@ -48,12 +48,12 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
 
   // Calculate Jacobian 
   Tools cal_Hj;
-  MatrixXd Hj_ = cal_Hj.CalculateJacobian(z);
+  MatrixXd Hj = cal_Hj.CalculateJacobian(z);
 
-  VectorXd y_ = z - H_of_z;
-  MatrixXd S_ = Hj_ * P_ * Hj_.transpose() + R_;
-  MatrixXd K_ = P_ * Hj_.transpose() * S_.inverse();
+  VectorXd y = z - H_of_z;
+  MatrixXd S = Hj * P_ * Hj.transpose() + R_;
+  MatrixXd K = P_ * Hj.transpose() * S.inverse();
 
-  x_ = x_ + K_ * y_;
-  P_ = ( MatrixXd::Identity(P_.size(), P_.size()) - K_ * Hj_ ) * P_;
+  x_ = x_ + K * y;
+  P_ = ( MatrixXd::Identity(P_.size(), P_.size()) - K * Hj ) * P_;
 }
