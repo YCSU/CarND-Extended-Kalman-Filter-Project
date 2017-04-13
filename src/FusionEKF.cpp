@@ -53,8 +53,8 @@ FusionEKF::FusionEKF() {
        0, 0, 0, 1;
 
   //set the acceleration noise components
-  noise_ax = 9;
-  noise_ay = 9;            
+  float noise_ax = 9.;
+  float noise_ay = 9.;            
 
 }
 

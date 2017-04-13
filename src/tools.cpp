@@ -29,10 +29,10 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
   }
 
   // take mean
-  rmse /= rmse.size()
+  rmse /= rmse.size();
 
   // take root
-  rmse = rmse.array().sqrt()
+  rmse = rmse.array().sqrt();
 
   return rmse;
 }
@@ -54,7 +54,7 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
   // check division by zero
   if( c1 < 0.0001)
   {
-  	std::cout << "Jacobian --- Division by Zero" << endl;
+  	std::cout << "Jacobian --- Division by Zero" << std::endl;
   	return Hj; 
   }
   
