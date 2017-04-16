@@ -10,7 +10,8 @@ Tools::Tools() {}
 Tools::~Tools() {}
 
 VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
-                              const vector<VectorXd> &ground_truth) {
+                              const vector<VectorXd> &ground_truth)
+{
   VectorXd rmse(4);
   rmse << 0., 0., 0., 0.;
   if( estimations.size() == 0 || estimations.size() != ground_truth.size() )
@@ -23,9 +24,9 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
   VectorXd diff;
   for( int i = 0; i < estimations.size(); i++)
   {
-	diff = estimations[i] - ground_truth[i];
-	diff = diff.array() * diff.array();
-	rmse += diff;
+	  diff = estimations[i] - ground_truth[i];
+    diff = diff.array() * diff.array();
+	  rmse += diff;
   }
 
   // take mean
@@ -37,9 +38,10 @@ VectorXd Tools::CalculateRMSE(const vector<VectorXd> &estimations,
   return rmse;
 }
 
-MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
+MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) 
+{
+  
   MatrixXd Hj(3,4);
-
   // state parameters
   float px = x_state(0);
   float py = x_state(1);
@@ -52,7 +54,7 @@ MatrixXd Tools::CalculateJacobian(const VectorXd& x_state) {
   float c3 = c1*c2;
 
   // check division by zero
-  if( c1 < 0.0001)
+  if( c1 < 0.001)
   {
   	std::cout << "Jacobian --- Division by Zero" << std::endl;
   	return Hj; 
