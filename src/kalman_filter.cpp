@@ -50,8 +50,7 @@ void KalmanFilter::UpdateEKF(const VectorXd &z) {
   H_of_x <<  ro, 
              atan2(py, px),
              (px*vx + py*vy) / ro;
-
-  // Calculate Jacobian 
+   
   VectorXd y = z - H_of_x;
   MatrixXd S = H_ * P_ * H_.transpose() + R_;
   MatrixXd K = P_ * H_.transpose() * S.inverse();
