@@ -41,10 +41,10 @@ FusionEKF::FusionEKF() {
               0, 1, 0, 0;
 
   
-  P << 1, 0, 0, 0,
-       0, 1, 0, 0,
-       0, 0, 1, 0,
-       0, 0, 0, 1;
+  P << 100, 0, 0, 0,
+       0, 100, 0, 0,
+       0, 0, 100, 0,
+       0, 0, 0, 100;
   
   //the initial transition matrix F_
   F << 1, 0, 1, 0,
@@ -83,13 +83,13 @@ void FusionEKF::ProcessMeasurement(const MeasurementPackage &measurement_pack) {
     ekf_.F_ = F;
 
     if (measurement_pack.sensor_type_ == MeasurementPackage::RADAR) {
-      float ro = measurement_pack.raw_measurements_[0];
-      float phi = measurement_pack.raw_measurements_[1];
-      float rho_dot = measurement_pack.raw_measurements_[2];
+      float ro = measurement_pack.raw_measurements_(0);
+      float phi = measurement_pack.raw_measurements_(1);
+      float rho_dot = measurement_pack.raw_measurements_(2);
       ekf_.x_ << ro * cos(phi), ro * sin(phi), 0, 0; 
     }
     else if (measurement_pack.sensor_type_ == MeasurementPackage::LASER) {
-      ekf_.x_ << measurement_pack.raw_measurements_[0], measurement_pack.raw_measurements_[1], 0, 0;
+      ekf_.x_ << measurement_pack.raw_measurements_(0), measurement_pack.raw_measurements_(1), 0, 0;
     }
     previous_timestamp_ = measurement_pack.timestamp_;
     // done initializing, no need to predict or update
